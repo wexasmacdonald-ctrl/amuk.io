@@ -32,9 +32,11 @@ type QueueStatus = {
   }>
 }
 
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+
 const API_BASE =
   (import.meta.env.VITE_API_BASE as string | undefined) ||
-  'http://localhost:8080'
+  (isLocal ? 'http://localhost:8787' : 'https://lobby.amuk.io')
 
 const SESSION_KEY = 'session_id'
 

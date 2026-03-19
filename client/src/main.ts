@@ -19,12 +19,12 @@ if (!context) {
 
 const input = createInput(canvas)
 const simulation = createSimulation()
-const defaultProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 const envWsBase = import.meta.env.VITE_WS_URL as string | undefined
 const sessionId = localStorage.getItem('session_id') || ''
-const fallbackWsBase = `${defaultProtocol}://${window.location.hostname}${
-  defaultProtocol === 'ws' ? ':8787' : ''
-}`
+const fallbackWsBase = isLocal
+  ? `ws://${window.location.hostname}:8787`
+  : 'wss://lobby.amuk.io'
 const matchId = window.location.pathname.startsWith('/match/')
   ? window.location.pathname.replace('/match/', '')
   : ''
