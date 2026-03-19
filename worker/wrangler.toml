@@ -1,0 +1,18 @@
+name = "amuk-io"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+route = "lobby.amuk.io/*"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "amuk-db"
+database_id = "6ede2ef5-1299-494d-871e-184688338947"
+
+[durable_objects]
+bindings = [
+  { name = "GAME", class_name = "GameArena" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GameArena"]

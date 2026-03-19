@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>amuk.io</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="scanlines"></div>
+    <div id="app">
+
+      <!-- ═══════════ LANDING ═══════════ -->
+      <section class="route is-active" data-route="/">
+        <div class="landing">
+          <canvas class="arena-bg" data-arena-bg></canvas>
+
+          <header class="topbar">
+            <div class="topbar__left">
+              <div class="logo">
+                <span class="logo__mark"></span>
+                <span class="logo__text">AMUK</span>
+                <span class="logo__dot">.io</span>
+              </div>
+            </div>
+            <div class="topbar__right">
+              <div class="wallet">
+                <div class="wallet__item">
+                  <span class="wallet__label">Cash</span>
+                  <span class="wallet__value wallet__value--cash">$2,450</span>
+                </div>
+                <div class="wallet__divider"></div>
+                <div class="wallet__item">
+                  <span class="wallet__label">Bonus</span>
+                  <span class="wallet__value wallet__value--bonus">$320</span>
+                </div>
+                <div class="wallet__divider"></div>
+                <div class="wallet__item">
+                  <span class="wallet__label">Tokens</span>
+                  <span class="wallet__value wallet__value--tokens">1,420</span>
+                </div>
+              </div>
+              <a class="avatar-button" data-route-link href="/profile">
+                <span class="avatar-button__icon"></span>
+                <span class="avatar-button__name" data-player-name>Guest</span>
+              </a>
+            </div>
+          </header>
+
+          <main class="landing__hero">
+            <div class="hero-copy">
+              <p class="hero-kicker reveal">skill-based arena</p>
+              <h1 class="hero-title reveal">
+                <span class="hero-title__line">Move fast.</span>
+                <span class="hero-title__line hero-title__line--accent">Score clean.</span>
+              </h1>
+              <p class="hero-sub reveal">
+                Compete in 2-minute arena rounds. Collect gems, dodge the shrinking boundary, knock opponents off the edge. Top 3 get paid.
+              </p>
+              <div class="hero-actions reveal">
+                <a class="btn btn--primary btn--lg" href="/play" data-route-link>
+                  <span class="btn__glow"></span>
+                  Enter Arena
+                </a>
+              </div>
+            </div>
+
+            <div class="hero-card reveal">
+              <div class="hero-card__header">
+                <span class="hero-card__badge">Featured Mode</span>
+                <span class="hero-card__live pulse-dot">Live</span>
+              </div>
+              <div class="hero-card__title">AMUK</div>
+              <div class="hero-card__desc">
+                Gem rush in a shrinking octagon. Hold to move, bump to kill. No respawn.
+              </div>
+              <div class="hero-card__rules">
+                <div class="rule-chip">
+                  <span class="rule-chip__label">Players</span>
+                  <span class="rule-chip__value">2–5</span>
+                </div>
+                <div class="rule-chip">
+                  <span class="rule-chip__label">Time</span>
+                  <span class="rule-chip__value">2:00</span>
+                </div>
+                <div class="rule-chip">
+                  <span class="rule-chip__label">Payout</span>
+                  <span class="rule-chip__value">Top 3</span>
+                </div>
+              </div>
+              <a class="btn btn--primary btn--block" href="/play" data-route-link>
+                <span class="btn__glow"></span>
+                Play Now
+              </a>
+            </div>
+          </main>
+
+        </div>
+      </section>
+
+      <!-- ═══════════ PLAY / QUEUE ═══════════ -->
+      <section class="route" data-route="/play">
+        <div class="screen">
+          <header class="screen__header">
+            <a class="btn btn--ghost btn--sm" href="/" data-route-link>&larr; Back</a>
+            <div class="screen__title">Matchmaking</div>
+            <div></div>
+          </header>
+          <div class="screen__body">
+            <div class="queue-card">
+              <div class="queue-card__status" data-queue-status>Ready to queue.</div>
+              <div class="queue-card__detail" data-queue-detail>
+                Click join to enter matchmaking.
+              </div>
+              <div class="queue-panel" data-queue-panel hidden>
+                <div class="queue-panel__header">
+                  <span class="queue-panel__title">Lobby</span>
+                  <span class="queue-panel__meta" data-queue-wait>Waiting for players...</span>
+                </div>
+                <ul class="queue-list" data-queue-list></ul>
+                <div class="queue-panel__actions">
+                  <button class="btn btn--ghost btn--sm" type="button" data-queue-start hidden>Start now</button>
+                  <button class="btn btn--ghost btn--sm" type="button" data-queue-bots hidden>Play with bots</button>
+                </div>
+              </div>
+              <div class="queue-card__actions">
+                <button class="btn btn--primary" type="button" data-join-match>
+                  <span class="btn__glow"></span>
+                  Join Match
+                </button>
+                <button class="btn btn--ghost" type="button" data-cancel-queue hidden>Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ MATCH ═══════════ -->
+      <section class="route" data-route-prefix="/match/">
+        <div class="screen screen--match">
+          <header class="screen__header screen__header--overlay">
+            <a class="btn btn--ghost btn--sm" href="/" data-route-link>&larr; Back</a>
+            <div class="screen__title"></div>
+            <div></div>
+          </header>
+          <button class="hud-button hud-button--pause" type="button" data-pause>Pause</button>
+          <button class="hud-button hud-button--leave" type="button" data-leave-match hidden>Leave match</button>
+          <canvas id="game" class="game-canvas" aria-label="amuk.io" role="img"></canvas>
+        </div>
+      </section>
+
+      <!-- ═══════════ RESULTS ═══════════ -->
+      <section class="route" data-route-prefix="/results/">
+        <div class="screen">
+          <header class="screen__header">
+            <a class="btn btn--ghost btn--sm" href="/" data-route-link>&larr; Back</a>
+            <div class="screen__title">Results</div>
+            <div></div>
+          </header>
+          <div class="screen__body">
+            <div class="results-card">
+              <div class="results-card__header">
+                <h2 class="results-card__title" data-results-title>Match Complete</h2>
+                <p class="results-card__sub" data-results-status>Top 3 win.</p>
+              </div>
+
+              <div class="results-card__your-stats">
+                <div class="stat-block">
+                  <span class="stat-block__label">Placement</span>
+                  <span class="stat-block__value" data-results-placement>--</span>
+                </div>
+                <div class="stat-block">
+                  <span class="stat-block__label">Gems</span>
+                  <span class="stat-block__value" data-results-gems>0</span>
+                </div>
+              </div>
+
+              <div class="results-card__section">
+                <h3 class="results-card__section-title">Podium</h3>
+                <ol class="podium-list" data-results-top></ol>
+              </div>
+
+              <div class="results-card__section">
+                <h3 class="results-card__section-title">Scoreboard</h3>
+                <div class="results-table-wrap">
+                  <table class="results-table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Gems</th>
+                      </tr>
+                    </thead>
+                    <tbody data-results-table></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <p class="results-card__match-id">
+                Match <span data-results-match>--</span>
+              </p>
+
+              <div class="results-card__actions">
+                <a class="btn btn--primary" href="/play" data-route-link>
+                  <span class="btn__glow"></span>
+                  Play Again
+                </a>
+                <a class="btn btn--ghost" href="/" data-route-link>Return Home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ LOGIN ═══════════ -->
+      <section class="route" data-route="/login">
+        <div class="screen">
+          <header class="screen__header">
+            <a class="btn btn--ghost btn--sm" href="/" data-route-link>&larr; Back</a>
+            <div class="screen__title">Sign In</div>
+            <div></div>
+          </header>
+          <div class="screen__body">
+            <div class="auth-card">
+              <p class="auth-card__status" data-profile-status>Not signed in.</p>
+              <label class="field">
+                <span class="field__label">Handle</span>
+                <input class="field__input" type="text" placeholder="Choose a handle" maxlength="24" data-profile-handle autocomplete="username" />
+              </label>
+              <label class="field">
+                <span class="field__label">Password</span>
+                <input class="field__input" type="password" placeholder="Enter password" minlength="6" data-profile-password autocomplete="current-password" />
+              </label>
+              <div class="auth-card__actions">
+                <button class="btn btn--primary" type="button" data-profile-save>
+                  <span class="btn__glow"></span>
+                  Create Account
+                </button>
+                <button class="btn btn--ghost" type="button" data-profile-login>Log In</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ PROFILE ═══════════ -->
+      <section class="route" data-route="/profile">
+        <div class="screen">
+          <header class="screen__header">
+            <a class="btn btn--ghost btn--sm" href="/" data-route-link>&larr; Back</a>
+            <div class="screen__title">Profile</div>
+            <div></div>
+          </header>
+          <div class="screen__body">
+            <div class="profile-card">
+              <div class="profile-card__avatar"></div>
+              <div class="profile-card__handle" data-profile-handle-readonly>Guest</div>
+              <button class="btn btn--ghost" type="button" data-profile-logout>Log Out</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <script type="module" src="/src/home.ts"></script>
+  </body>
+</html>
