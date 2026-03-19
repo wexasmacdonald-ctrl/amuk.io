@@ -782,7 +782,11 @@ const boot = async () => {
       }
     })
   }
-  currentAccount = await getMe()
+  try {
+    currentAccount = await getMe()
+  } catch {
+    currentAccount = null
+  }
   updateLoginUI()
   await setActiveRoute(window.location.pathname)
 }

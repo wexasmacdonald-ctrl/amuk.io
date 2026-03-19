@@ -156,12 +156,6 @@ export const getMatchPlayers = async (matchId: string) => {
   return apiRequest<MatchPlayerRow[]>(`/api/matches/${matchId}/players`)
 }
 
-export const collectGem = async (matchId: string) => {
-  await apiRequest(`/api/matches/${matchId}/collect`, {
-    method: 'POST',
-  })
-}
-
 export const finalizeMatch = async (matchId: string) => {
   return apiRequest<MatchRow>(`/api/matches/${matchId}/finalize`, {
     method: 'POST',
